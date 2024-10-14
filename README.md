@@ -24,7 +24,7 @@ https://help.aliyun.com/zh/model-studio/developer-reference/configure-api-key-th
 
 如果你跟我一样是代码小白，建议按照以下步骤操作，以下命令均在服务器的终端执行。（看起来很复杂，实际上一点也不难）
 
-##【配置环境变量】
+# 【配置环境变量】
 在项目文件夹中添加 ~/.dashscope/api_key 文件路径
 
 1.创建目录:
@@ -55,7 +55,7 @@ dashscope.api_key_file_path = '~/.dashscope/api_key'
 export DASHSCOPE_API_KEY_FILE_PATH=~/.dashscope/api_key
 这将会在当前终端会话中设置环境变量，服务器重启之后需要重新手动运行。
 
-##【通过shell文件自动加载环境变量】
+# 【通过shell文件自动加载环境变量】
 将设置环境变量的命令添加到 shell文件中，这样每次启动终端时会自动加载，具体操作步骤如下：
 
 1. 确定使用的 Shell
@@ -103,8 +103,11 @@ echo $DASHSCOPE_API_KEY_FILE_PATH
 2.进入config文件配置用来增强提示词的model、api_url、api_key，这个比较简单就不赘述了。
 
 3.重启chatgpt-on-wechat项目，如果同时出现以下提示：
+
 [INFO][2024-10-14 22:04:07][plugin_manager.py:41] - Plugin AliFlux_Dev_v1.0 registered, path=./plugins/ali_flux_dev
+
 [INFO][2024-10-14 22:04:07][ali_flux_dev.py:33] - [AliFluxDev] initialized
+
 [INFO][2024-10-14 22:04:07][ali_flux_dev.py:40] - API密钥已设置
 
 那么恭喜你插件安装成功,赶紧来体验白嫖的乐趣吧！
