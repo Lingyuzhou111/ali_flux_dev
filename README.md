@@ -25,38 +25,38 @@ https://help.aliyun.com/zh/model-studio/developer-reference/configure-api-key-th
 如果你跟我一样是代码小白，建议按照以下步骤操作，以下命令均在服务器的终端执行。（看起来很复杂，实际上一点也不难）
 
 # 【配置环境变量】
-在项目文件夹中添加 ~/.dashscope/api_key 文件路径
+在项目文件夹中添加 ~/.dashscope/api_key 文件路径，具体操作步骤如下：
 
-1.创建目录:
+1. 创建目录:
 首先在终端中创建 ~/.dashscope 文件目录，使用以下命令：
 mkdir -p ~/.dashscope
 
-2.创建 API 密钥文件:
+2. 创建 API 密钥文件:
 在 ~/.dashscope 目录中创建一个名为 api_key 的文件。使用以下命令：
 touch ~/.dashscope/api_key
 
-3.编辑文件:
+3. 编辑文件:
 如果没有安装nano 编辑器，在终端中输入以下命令行完成安装即可：sudo yum install nano
 使用文本编辑器（如 nano、vim 或者你喜欢的编辑器）打开 api_key 文件，并在文件中添加你的 API 密钥。假设你的 API 密钥是 your_api_key_here，在终端执行以下命令：
 echo "your_api_key_here" > ~/.dashscope/api_key（将"your_api_key_here" 替换成你在官网创建的API-KEY）
 
-4.验证密钥文件是否创建成功
+4. 验证密钥文件是否创建成功
 继续在终端中输入: nano ~/.dashscope_api_key 并按下 Enter。
 如果文件不存在，nano 将会创建一个新文件。如果文件已经存在，它将打开该文件供您编辑。
  Ctrl + O保存➡️Enter确认保存➡️按 Ctrl + X 退出 nano 编辑器。
 
-5.在代码中指定文件路径:
+5. 在代码中指定文件路径:
 在你的代码中，确保设置 dashscope.api_key_file_path 为你刚刚创建的文件路径。可以在相关的配置文件中添加如下代码：
 dashscope.api_key_file_path = '~/.dashscope/api_key'
 这一步已经写在了插件代码中，用户无需操作。
 
-6.使用环境变量:
+6. 使用环境变量:
 在终端中运行以下命令：
 export DASHSCOPE_API_KEY_FILE_PATH=~/.dashscope/api_key
 这将会在当前终端会话中设置环境变量，服务器重启之后需要重新手动运行。
 
 # 【通过shell文件自动加载环境变量】
-将设置环境变量的命令添加到 shell文件中，这样每次启动终端时会自动加载，具体操作步骤如下：
+将设置环境变量的命令添加到 shell文件中，这样每次启动终端时会自动加载而无需手动运行，具体操作步骤如下：
 
 1. 确定使用的 Shell
 首先，你需要确认你使用的是哪种 shell。常见的 shell 有 Bash 和 Zsh。你可以通过在终端中输入以下命令来查看当前使用的 shell：
