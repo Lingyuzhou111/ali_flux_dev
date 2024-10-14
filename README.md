@@ -7,15 +7,18 @@ ali_flux_dev是一款适用于chatgpt-on-wechat 的绘图插件，调用阿里�
 阿里云的图片生成API调用方式采用的是ImageSynthesis.async_call函数，它不是 Python 标准库中的函数，因此操作起来比一般的API调用要麻烦一点。
 
 使用该插件的前提条件（详见阿里云百炼官方API文档）：https://bailian.console.aliyun.com/?accounttraceid=73d51cc1708e4ea88fd90c654e118f0buonj#/model-market/detail/flux-dev
+
 已开通服务并获得api-key：获取API-KEY、配置API-KEY到环境变量。
 已安装SDK：安装SDK。
 
 # 一. 安装SDK
 SDK是“软件开发工具包”（Software Development Kit）的缩写。它是一组工具、库和文档，帮助开发者创建软件应用程序。
+
 正常情况下如果，在你的cow项目部署之初就应该已经完成了SDK的安装，所以此处略过。
 
 # 二. 获取API-KEY
 首先登录阿里云百炼账号，访问阿里云百炼模型体验页面，点击右上角钥匙🔑标志，选择创建API-KEY，复制下来备用。
+
 模型体验网址 https://bailian.console.aliyun.com/?accounttraceid=73d51cc1708e4ea88fd90c654e118f0buonj#/efm/model_experience_center/vision?currentTab=imageGenerate
 
 # 三. 配置API-KEY到环境变量
