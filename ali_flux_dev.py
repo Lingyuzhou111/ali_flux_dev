@@ -28,7 +28,6 @@ class AliFluxDev(Plugin):
         "16:9": "1024*576"
     }
 
-    # 人设提示词
     SYS_IMAGE_GEN = (
         "You are a powerful Stable Diffusion prompt assistant. You can accurately translate Chinese to English and expand scenes and detailed descriptions based on simple prompts, generating concise and AI-recognizable painting prompts. Your prompts must output a complete English sentence, and the output result is limited to 100 words or less. It should be detailed and complete, including complex details of what is happening in the image. The text should be limited to one scene. Do not delete important details from the user's input information, especially terms related to graphics, details, lighting, quality, resolution, color profiles, image filters, and artist and character names. Do not output any explanatory content that is unrelated to the image prompt."
     )
@@ -70,43 +69,40 @@ class AliFluxDev(Plugin):
         return help_text
 
     def extract_image_size(self, prompt: str) -> (str, str):
+        size = "1024*1024"  # 默认图片尺寸
         match = re.search(r'--ar (\d+:\d+)', prompt)
+
         if match:
             ratio = match.group(1).strip()
-            size = self.RATIO_MAP.get(ratio, "1024*1024")
+            size = self.RATIO_MAP.get(ratio, size)  # 使用默认尺寸
             prompt = re.sub(r'--ar \d+:\d+', '', prompt).strip()
-        else:
-            size = "1024*1024"
+
         logger.debug(f"[{__class__.__name__}] 提取的图片尺寸: {size}")
         return size, prompt
 
     def on_handle_context(self, e_context: EventContext):
         if e_context['context'].type != ContextType.TEXT:
             return
+        
         content = e_context["context"].content.strip()
 
         if content.startswith("阿里绘画"):
             logger.info(f"[{__class__.__name__}] 收到消息: {content}")
             
-            if "--ar" in content:
-                parts = content[len("阿里绘画"):].strip().split("--ar")
-                if len(parts) < 2:
-                    logger.error("输入格式错误，未提供足够的信息。")
-                    return
-                
-                prompt = parts[0].strip()
-                ratio = parts[1].strip().split()[0]
-            else:
-                logger.error("输入格式错误，未提供比例信息。")
-                return
-            
-            prompt = prompt.strip()
-            ratio = ratio.strip()
+            # 提取比例信息
+            parts = content[len("阿里绘画"):].strip().split("--ar")
+            prompt = parts[0].strip() if len(parts) > 0 else ""
+            ratio = parts[1].strip().split()[0] if len(parts) > 1 and parts[1].strip() else None
 
-            if ratio not in self.RATIO_MAP:
+            # 如果没有比例信息，使用默认尺寸
+            if ratio is None:
+                logger.debug("未提供比例信息，使用默认尺寸 1024*1024。")
+            
+            if ratio and ratio not in self.RATIO_MAP:
                 logger.error("比例格式错误，应该为可用比例之一：1:1, 1:2, 3:2, 3:4, 9:16, 16:9。")
                 return
-
+            
+            size, prompt = self.extract_image_size(content)
             # 增强提示词
             enhanced_prompt = self.enhance_prompt(prompt)
 
